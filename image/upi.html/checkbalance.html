@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkbalance Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Checkbalance</h1>
+    <div class="input-group">
+      <label for="bankname">Bank Name</label>
+      <input type="text" id="bankname" required>
+    </div>
+    <div class="input-group">
+      <label for="accountno">Account No</label>
+      <input type="number" id="accountno" required>
+    </div>
+    <div class="input-group">
+      <label for="pin">Pin</label>
+      <input type="number" id="pin" required>
+    </div>
+    <div class="input-group">
+      <button type="button" class="btn btn-success" onclick="checkBalance()">Check Balance</button>
+    </div>
+  </div>
+
+<script>
+  function checkBalance() {
+  var storedBankAccounts = localStorage.getItem('bankAccounts');
+  if (storedBankAccounts) {
+    var bankAccounts = JSON.parse(storedBankAccounts);
+    var bankName = document.getElementById('bankname').value;
+    var accountNoInput = document.getElementById('accountno').value;
+    var pinInput = document.getElementById('pin').value;
+    var matchedAccount = bankAccounts.find(function(account) {
+      return account.bankName === bankName && account.accountNo === accountNoInput && account.pin === pinInput;
+    });
+  
+    if (matchedAccount) {
+      alert('Your balance is: ' + matchedAccount.amount);
+    } else {
+      alert('Invalid bank name, account number, or pin.');
+    }
+  } else {
+    alert('No bank accounts found.');
+  }
+}
+
+</script>
+</body>
+</html>

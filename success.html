@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Parking</title>
+  <link rel="stylesheet" href="Parking.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+    body {
+      background-color: #f1f1f1;
+    }
+
+    .container-fluid {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background-color: #007bff;
+      padding: 10px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .header .nav-link {
+      color: #fff;
+    }
+
+    .header .nav-link.active {
+      background-color: #0056b3;
+    }
+
+    .header .nav-link:hover {
+      background-color: #0069d9;
+    }
+
+    h2 {
+      color: #007bff;
+    }
+
+    .row .col {
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      position: relative;
+    }
+
+    .card-title {
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .card-text {
+      margin-bottom: 10px;
+    }
+
+    .btn-primary,
+    .btn-danger {
+      margin-right: 5px;
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+
+    .btn-primary:hover,
+    .btn-danger:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+
+    .timer,
+    .amount {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      color: #777;
+    }
+
+    #paymentModal .modal-content {
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #aaa;
+      cursor: pointer;
+    }
+
+    #paymentModal h2 {
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+
+    #paymentModal input[type="text"] {
+      margin-bottom: 10px;
+      padding: 5px;
+    }
+
+    #paymentModal button {
+      padding: 8px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #paymentModal button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="book2.css">
+  <script src="book2.js"></script>
+  <div class="container-fluid">
+    <div class="header">
+      <div class="hdcss">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+              type="button" role="tab" aria-controls="nav-home" aria-selected="true" onclick="home()">Home</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+              type="button" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="logout()">Logout</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"></div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab"></div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <h2>Car Parking Slot</h2>
+    <div class="row g-3">
+      <div class="col me-4">
+        <input type="text" class="form-control" placeholder="Vehicle Number:" aria-label="Vehicle Number"
+          id="EntryVh">
+      </div>
+      <div class="col">
+        <input type="text" class="form-control" placeholder="Owner Name" aria-label="Owner Name" id="OwnName">
+      </div>
+
+      <div class="col">
+        <input type="tel" class="form-control" placeholder="Mobile no" aria-label="Mobile no" id="mob">
+      </div>
+      <button onclick="generateOTP()">Generate OTP</button>
+    </div>
+    <br>
+    <br>
+    <img src="./pictures/image.jpeg" style="width: 150px; height: 150px; margin-bottom: 10px;">
+    <br>
+
+    <!--Slot Arrangements-->
+    <h4 id="checkinOp"></h4>
+    <!--Slot 1-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 1:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(1, 'checkin1')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(1, 'checkin1')">Exit</a>
+        <h4 id="checkin1"></h4>
+        <div class="timer" id="timer1"></div>
+        <div class="amount" id="amount1"></div>
+      </div>
+    </div>
+    <br>
+
+    <!--Slot 2-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 2:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(2, 'checkin2')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(2, 'checkin2')">Exit</a>
+        <h4 id="checkin2"></h4>
+        <div class="timer" id="timer2"></div>
+        <div class="amount" id="amount2"></div>
+      </div>
+    </div>
+    <br>
+
+    <!--Slot 3-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 3:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(3, 'checkin3')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(3, 'checkin3')">Exit</a>
+        <h4 id="checkin3"></h4>
+        <div class="timer" id="timer3"></div>
+        <div class="amount" id="amount3"></div>
+      </div>
+    </div>
+    <br>
+
+    <!--Slot 4-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 4:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(4, 'checkin4')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(4, 'checkin4')">Exit</a>
+        <h4 id="checkin4"></h4>
+        <div class="timer" id="timer4"></div>
+        <div class="amount" id="amount4"></div>
+      </div>
+    </div>
+    <br>
+
+    <!--Slot 5-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 5:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(5, 'checkin5')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(5, 'checkin5')">Exit</a>
+        <h4 id="checkin5"></h4>
+        <div class="timer" id="timer5"></div>
+        <div class="amount" id="amount5"></div>
+      </div>
+    </div>
+    <br>
+
+    <!--Slot 6-->
+    <div class="card w-50 border-4 border border-primary">
+      <div class="card-body">
+        <h5 class="card-title">Parking</h5>
+        <p class="card-text">Slot 6:</p>
+        <a href="#" class="btn btn-primary" onclick="bookSlot(6, 'checkin6')">Book</a>
+        <a href="#" class="btn btn-danger" onclick="exit(6, 'checkin6')">Exit</a>
+        <h4 id="checkin6"></h4>
+        <div class="timer" id="timer6"></div>
+        <div class="amount" id="amount6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closePaymentModal()">&times;</span>
+    <h2>Payment</h2>
+    <input type="text" id="paymentAmount" placeholder="Enter Amount">
+    <button onclick="makePayment()">Pay</button>
+  </div>
+</div>
+
+<script>
+  function home() {
+    window.location.href = "front.html";
+  }
+  function logout(){
+    window.location.href="loginpage.html";
+  }
+</script>
+</body>
+</html>

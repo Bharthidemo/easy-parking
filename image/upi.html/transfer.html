@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TranSfer Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TRANSFER MONEY</h1>
+        <div class="input-group">
+            <label for="fromUPIID">From UPI ID</label>
+            <input type="number" id="upiid" required>
+        </div>
+        <div class="input-group">
+            <label for="toUPIID">To UPI ID</label>
+            <input type="number" id="upiid" required>
+        </div>
+        <div class="input-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" required>
+        </div>
+        <div class="input-group">
+            <button type="button" class="btn btn-success" onclick="transferMoney()">Transfer Money</button>
+        </div>
+    </div>
+    
+    <script>
+        function transferMoney() {
+            var storedBankAccounts = localStorage.getItem('bankAccounts');
+            if (storedBankAccounts) {
+                var bankAccounts = JSON.parse(storedBankAccounts);
+                var fromUPIID = document.getElementById('upiid').value;
+                var toUPIID = document.getElementById('upiid').value;
+                var amount = parseInt(document.getElementById('amount').value);
+    
+                var fromAccount = bankAccounts.find(function (account) {
+                    return account.upi === fromUPIID;
+                });
+    
+                var toAccount = bankAccounts.find(function (account) {
+                    return account.upi === toUPIID;
+                });
+    
+                if (!fromAccount || !toAccount) {
+                    alert('Invalid UPI IDs.');
+                    return;
+                }
+    
+                if (fromAccount.balance < amount) {
+                    alert('Insufficient balance in the sender account.');
+                    return;
+                }
+    
+                // fromAccount.balance -= amount;
+                amount=fromAccount.balance -amount;
+               // toAccount.balance += amount;
+                   amount=toAccount.balance+amount;
+                localStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
+    
+                alert('Money transferred successfully.');
+    
+                // Display the updated balances
+                alert('From UPI ID (' + fromUPIID + ') Balance: ' + amount);
+                alert('To UPI ID (' + toUPIID + ') Balance: ' + amount);
+            } else {
+                alert('No bank accounts found.');
+            }
+        }
+    
+  </script>
+</body>
+</html>

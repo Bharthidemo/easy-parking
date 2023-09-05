@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register form </title>
+    </head>
+    <body>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        <script src="./details.js" type="text/javascript"></script>
+        <div class="container">
+            <h2> register</h2>
+            <form>
+                <div class="row mt-4">
+                    <div class="col">Name</div>
+                    <div class="col"><input type="text" name="name" id="name" class="form-control"/></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">MobileNo</div>
+                    <div class="col"><input type="text" name="mobile" id="mobile" class="form-control"/></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">Email</div>
+                    <div class="col"><input type="email" name="email" id="email" class="form-control"/></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">Password</div>
+                    <div class="col"><input type="password" name="pswd" id="pswd" class="form-control"/></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col">Conform password</div>
+                    <div class="col"><input type="password" name="cfmpswd" id="cfmpswd" class="form-control"/></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col"></div>
+                    <div class="col">
+                        <button type="button" class="btn btn-success" onclick="validateregister()">Register</button>
+                        &nbsp;
+                        <input type="reset" value="Cancel" class="btn btn-secondary"/>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col"></div>
+                    <div class="col"><span id="lgMsg"></span></div>
+                </div>
+            </form>
+        </div>
+        <script>
+            function validateregister() {
+                 let name = document.getElementById('name').value;
+                 let mobile = document.getElementById('mobile').value;
+                 let email = document.getElementById('email').value;
+                 let password = document.getElementById('pswd').value;
+                 let confirmPassword = document.getElementById('cfmpswd').value;
+                 let lgMsg = document.getElementById('lgMsg');
+
+               // Perform validation checks
+                   if (name.trim() === '') {
+                     lgMsg.innerHTML = 'Please enter your name.';
+                     return;
+                     }
+
+                    if (mobile.trim() === '') {
+                    lgMsg.innerHTML = 'Please enter your mobile number.';
+                    return;
+                     }
+
+                  if (email.trim() === '') {
+                  lgMsg.innerHTML = 'Please enter your email address.';
+                  return;
+                    }
+
+  if (password.trim() === '') {
+    lgMsg.innerHTML = 'Please enter a password.';
+    return;
+  }
+
+  if (confirmPassword.trim() === '') {
+    lgMsg.innerHTML = 'Please confirm your password.';
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    lgMsg.innerHTML = 'Passwords do not match.';
+    return;
+  }
+
+  // Check if the user already exists in the validates array
+  for (let user of validates) {
+    if (user.name === name) {
+      localStorage.setItem('name', name);
+      break;
+    }
+  }
+
+  for (let user of validates) {
+    if (user.mobile === mobile) {
+      localStorage.setItem('mobile', mobile);
+      break;
+    }
+  }
+
+  for (let user of validates) {
+    if (user.email === email) {
+      localStorage.setItem('email', email);
+      break;
+    }
+  }
+
+  for (let user of validates) {
+    if (user.pswd === password) {
+      localStorage.setItem('pswd', password);
+      break;
+    }
+  }
+
+  for (let user of validates) {
+    if (user.cfmpswd === confirmPassword) {
+      localStorage.setItem('cfmpswd', confirmPassword);
+      break;
+    }
+  }
+
+  lgMsg.innerHTML = 'Registration successful.';
+  window.location.href = './login1.html';
+}
+
+let userExists = false;
+  for (let user of validates) {
+    if (user.name === name && user.mobile === mobile && user.email === email) {
+      userExists = true;
+      break;
+    }
+  }
+
+  if (userExists) {
+    lgMsg.innerHTML = 'User already exists.';
+  } else {
+    localStorage.setItem('name', name);
+    localStorage.setItem('mobile', mobile);
+    localStorage.setItem('email', email);
+    localStorage.setItem('pswd', password);
+    localStorage.setItem('cfmpswd', confirmPassword);
+    lgMsg.innerHTML = 'Registration successful.';
+    window.location.href = './login1.html';
+  }
+
+
+        </script>
+    </body>
+    </html>

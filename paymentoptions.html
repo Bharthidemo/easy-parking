@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Payment</title>
+  <link rel="stylesheet" href="payment.css">
+</head>
+
+<body onload="makePayment()">
+  <h1>Payment</h1>
+
+  <div class="payment-form">
+    <label for="amount">Amount:</label>
+    <input type="text" id="amount" placeholder="Enter amount" />
+
+    <label for="payment-method">Payment Method:</label>
+    <select id="payment-method">
+      <option value="credit-card">Credit Card</option>
+      <option value="debit-card">Debit Card</option>
+      <option value="net-banking">Net Banking</option>
+      <option value="upi">UPI ID</option>
+    </select>
+
+    <div id="credit-card-info">
+      <label for="card-number">Card Number:</label>
+      <input type="text" id="card-number" placeholder="Enter card number" />
+
+      <label for="expiry">Expiry Date:</label>
+      <input type="text" id="expiry" placeholder="MM/YY" />
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" placeholder="CVV" />
+    </div>
+
+    <div id="debit-card-info" style="display: none;">
+      <label for="debit-card-number">Debit Card Number:</label>
+      <input type="text" id="debit-card-number" placeholder="Enter debit card number" />
+
+      <label for="debit-card-pin">PIN:</label>
+      <input type="password" id="debit-card-pin" placeholder="Enter PIN" />
+    </div>
+
+    <div id="net-banking-info" style="display: none;">
+      <label for="bank">Bank:</label>
+      <input type="text" id="bank" placeholder="Enter bank name" />
+
+      <label for="net-banking-username">Username:</label>
+      <input type="text" id="net-banking-username" placeholder="Enter username" />
+
+      <label for="net-banking-password">Password:</label>
+      <input type="password" id="net-banking-password" placeholder="Enter password" />
+    </div>
+
+    <div id="upi-info" style="display: none;">
+      <label for="upi-id">UPI ID:</label>
+      <input type="text" id="upi-id" placeholder="Enter UPI ID" />
+    </div>
+
+    <button onclick="makePayment()">Make Payment</button>
+  </div>
+  <script>
+    function makePayment() {
+      
+  var totAmnt = sessionStorage.getItem('amount');
+     console.log(totAmnt);
+  // Display the amount in the input box
+  document.getElementById('amount').value = totAmnt;
+
+  var paymentMethod = document.getElementById('payment-method').value;
+      if (paymentMethod === 'credit-card') {
+        var cardNumber = document.getElementById('card-number').value;
+        var expiry = document.getElementById('expiry').value;
+        var cvv = document.getElementById('cvv').value;
+
+        if (amount && cardNumber && expiry && cvv) {
+          alert('Credit Card Payment Successful!\nAmount: ' + amount);
+        } else {
+          alert('Please fill in all the credit card details.');
+        }
+      } else if (paymentMethod === 'debit-card') {
+        var debitCardNumber = document.getElementById('debit-card-number').value;
+        var debitCardPin = document.getElementById('debit-card-pin').value;
+
+        if (amount && debitCardNumber && debitCardPin) {
+          alert('Debit Card Payment Successful!\nAmount: ' + amount);
+        } else {
+          alert('Please fill in all the debit card details.');
+        }
+      } else if (paymentMethod === 'net-banking') {
+        var bank = document.getElementById('bank').value;
+        var username = document.getElementById('net-banking-username').value;
+        var password = document.getElementById('net-banking-password').value;
+
+        if (amount && bank && username && password) {
+          alert('Net Banking Payment Successful!\nAmount: ' + amount);
+        } else {
+          alert('Please fill in all the net banking details.');
+        }
+      } else if (paymentMethod === 'upi') {
+        var upiId = document.getElementById('upi-id').value;
+
+        if (amount && upiId) {
+          alert('UPI ID Payment Successful!\nAmount: ' + amount);
+        } else {
+          alert('Please fill in the UPI ID.');
+        }
+      }
+    }
+
+    document.getElementById('payment-method').addEventListener('change', function () {
+      var paymentMethod = this.value;
+
+      if (paymentMethod === 'credit-card') {
+        document.getElementById('credit-card-info').style.display = 'block';
+        document.getElementById('debit-card-info').style.display = 'none';
+        document.getElementById('net-banking-info').style.display = 'none';
+        document.getElementById('upi-info').style.display = 'none';
+      } else if (paymentMethod === 'debit-card') {
+        document.getElementById('credit-card-info').style.display = 'none';
+        document.getElementById('debit-card-info').style.display = 'block';
+        document.getElementById('net-banking-info').style.display = 'none';
+        document.getElementById('upi-info').style.display = 'none';
+      } else if (paymentMethod === 'net-banking') {
+        document.getElementById('credit-card-info').style.display = 'none';
+        document.getElementById('debit-card-info').style.display = 'none';
+        document.getElementById('net-banking-info').style.display = 'block';
+        document.getElementById('upi-info').style.display = 'none';
+      } else if (paymentMethod === 'upi') {
+        document.getElementById('credit-card-info').style.display = 'none';
+        document.getElementById('debit-card-info').style.display = 'none';
+        document.getElementById('net-banking-info').style.display = 'none';
+        document.getElementById('upi-info').style.display = 'block';
+      }
+    });
+   
+
+  </script>
+</body>
+
+</html>

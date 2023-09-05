@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+  
+  body {
+    background-color: #f2f2f2;
+    height: 100vh;
+  }
+  
+  .container {
+    height: 100%;
+  }
+  
+  #contact {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h3 {
+    color: #000;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
+  
+  @media (max-width: 767.98px) {
+    .col-lg-4, .col-md-6, .col-12 {
+      padding: 0;
+    }
+  }
+  

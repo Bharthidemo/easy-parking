@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkbalance Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>REMOVE ACCOUNT</h1>
+        <div class="input-group">
+            <label for="bankname">Bank Name</label>
+            <input type="text" id="bankname" required>
+        </div>
+        <div class="input-group">
+            <label for="accountno">Account No</label>
+            <input type="number" id="accountno" required>
+        </div>
+        <div class="input-group">
+            <label for="pin">PIN</label>
+            <input type="number" id="pin" required>
+        </div>
+        <div class="input-group">
+            <button type="button" class="btn btn-success" onclick="removeacc()">Remove Account</button>
+        </div>
+    </div>
+    
+    <script>
+        function removeacc() {
+            var storedBankAccounts = localStorage.getItem('bankAccounts');
+            if (storedBankAccounts) {
+                var bankAccounts = JSON.parse(storedBankAccounts);
+                var bankName = document.getElementById('bankname').value;
+                var accountNoInput = document.getElementById('accountno').value;
+                var pinInput = document.getElementById('pin').value;
+    
+                var matchedAccount = bankAccounts.find(function (account) {
+                    return account.bankName === bankName && account.accountNo === accountNoInput && account.pin === pinInput;
+                });
+    
+                if (matchedAccount) {
+                    var balance = matchedAccount.balance;
+                    alert('Your balance is: ' + balance);
+                    var matchedAccountIndex = bankAccounts.indexOf(matchedAccount);
+                    bankAccounts.splice(matchedAccountIndex, 1);
+                    localStorage.setItem('bankAccounts', JSON.stringify(bankAccounts));
+                    alert('Account removed successfully.');
+                } else {
+        
+                    alert('Invalid bank name, account number, or PIN.');
+                }
+            } else {
+                alert('No bank accounts found.');
+            }
+        }
+    </script>
+    </body>
+    </html>    
